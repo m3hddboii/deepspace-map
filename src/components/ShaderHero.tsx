@@ -6,9 +6,8 @@ import { shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin(SplitText, useGSAP);
+gsap.registerPlugin(useGSAP);
 
 const vertexShader = `
   varying vec2 vUv;
@@ -194,9 +193,7 @@ export default function ShaderHero({
       if (!headerRef.current) return;
 
       document.fonts.ready.then(() => {
-        const split = new SplitText(headerRef.current!, { type: 'lines', wordsClass: 'lines' });
-
-        gsap.set(split.lines, {
+        gsap.set(headerRef.current, {
           filter: 'blur(16px)',
           yPercent: 30,
           autoAlpha: 0,
@@ -214,7 +211,7 @@ export default function ShaderHero({
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         if (badgeRef.current) tl.to(badgeRef.current, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.0);
-        tl.to(split.lines, { filter: 'blur(0px)', yPercent: 0, autoAlpha: 1, scale: 1, duration: 0.9, stagger: 0.15 }, 0.1);
+        tl.to(headerRef.current, { filter: 'blur(0px)', yPercent: 0, autoAlpha: 1, scale: 1, duration: 0.9 }, 0.1);
         if (paraRef.current) tl.to(paraRef.current, { autoAlpha: 1, y: 0, duration: 0.5 }, '-=0.55');
         if (ctaRef.current) tl.to(ctaRef.current, { autoAlpha: 1, y: 0, duration: 0.5 }, '-=0.35');
         if (microItems.length > 0) tl.to(microItems, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1 }, '-=0.25');
