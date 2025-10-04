@@ -19,7 +19,7 @@ const vertexShader = `
 
 const fragmentShader = `
   #ifdef GL_ES
-    precision lowp float;
+    precision highp float;
   #endif
   uniform float iTime;
   uniform vec2 iResolution;
@@ -129,8 +129,8 @@ function ShaderPlane() {
   });
 
   return (
-    <mesh ref={meshRef} position={[0, -0.75, -0.5]}>
-      <planeGeometry args={[4, 4]} />
+    <mesh ref={meshRef} position={[0, 0, -0.5]}>
+      <planeGeometry args={[6, 6]} />
       <cPPNShaderMaterial ref={materialRef} side={THREE.DoubleSide} />
     </mesh>
   );
@@ -151,7 +151,7 @@ function ShaderBackground() {
   
   return (
     <div ref={canvasRef} className="absolute inset-0 -z-10 w-full h-full bg-background" aria-hidden="true">
-      <Canvas camera={camera} gl={{ antialias: true, alpha: false }} dpr={[1, 2]} style={{ width: '100%', height: '100%' }}>
+      <Canvas camera={camera} gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }} dpr={[1, 1]} style={{ width: '100%', height: '100%' }}>
         <ShaderPlane />
       </Canvas>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-background/20" />
